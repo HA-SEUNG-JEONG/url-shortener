@@ -7,11 +7,6 @@ interface InputProps {
 }
 
 const LinkResult = ({ inputValue }: InputProps) => {
-  //   const [shortenLink, setShortenLink] = useState("");
-  //   const [copied, setCopied] = useState(false);
-  //   const [loading, setLoading] = useState(false);
-  //   const [error, setError] = useState(false);
-
   const [state, setState] = useState({
     shortenLink: "",
     copied: false,
