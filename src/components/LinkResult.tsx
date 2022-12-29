@@ -40,16 +40,18 @@ const LinkResult = ({ inputValue }: InputProps) => {
 
   if (state.loading) <p>Loading...</p>;
 
-  if (state.error) return <p>Something wne t wrong :(</p>;
+  if (state.error) return <p>링크가 잘못되었습니다. 다시 한번 확인해주세요.</p>;
+
+  const handleCopy = () => {
+    setState((existing) => ({ ...existing, copied: true }));
+  };
 
   return (
     <>
       {state.shortenLink && (
         <div className="result">
           <p>{state.shortenLink}</p>
-          <CopyToClipboard
-            text={state.shortenLink}
-            onCopy={() => setState((existing) => ({ ...existing, copied: true }))}>
+          <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
             <button>Copy to Clipboard</button>
           </CopyToClipboard>
         </div>
