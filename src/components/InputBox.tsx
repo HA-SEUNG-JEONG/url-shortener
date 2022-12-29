@@ -1,10 +1,5 @@
 import { styled } from "@stitches/react";
-import { ChangeEvent } from "react";
-
-const MainContainer = styled("form", {
-  fontSize: "13px",
-  border: "0",
-});
+import { Dispatch, SetStateAction, useState } from "react";
 
 const InputContainer = styled("input", {
   border: "0",
@@ -25,16 +20,29 @@ const Button = styled("button", {
   },
 });
 
-const InputBox = () => {
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("event");
+interface SetInputValueProps {
+  setInputValue: Dispatch<SetStateAction<string>>;
+}
+
+const InputBox = ({ setInputValue }: SetInputValueProps) => {
+  const [value, setValue] = useState("");
+  const handleClick = () => {
+    setInputValue(value);
+    setValue("");
   };
+
   return (
-    <MainContainer onSubmit={handleSubmit}>
-      <InputContainer type="text" placeholder="Please enter URL" />
-      <Button>Shorten!</Button>
-    </MainContainer>
+    <>
+      <h2>URL Shortener</h2>
+      <InputContainer
+        type="link"
+        id="link"
+        name="link" //name 연결해서 링크 입력되도록
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Please enter URL"
+      />
+      <Button onClick={handleClick}>Shorten!</Button>
+    </>
   );
 };
 
