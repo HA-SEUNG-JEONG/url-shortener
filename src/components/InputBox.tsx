@@ -38,7 +38,7 @@ const InputBox = ({ setInputValue }: SetInputValueProps) => {
         type="link"
         id="link"
         name="link" //name 연결해서 링크 입력되도록
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(changeEvent) => setValue(changeEvent.target.value)}
         placeholder="Please enter URL"
       />
       <Button onClick={handleClick}>Shorten!</Button>
