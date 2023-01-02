@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { styled } from "@stitches/react";
 
 interface InputProps {
   inputValue: string;
 }
+
+const Anchor = styled("a", {
+  display: "flex",
+  flexDirection: "column",
+  padding: "1rem 1rem",
+  marginLeft: "0.5rem",
+  color: "SkyBlue",
+  fontWeight: "bold",
+});
 
 const LinkResult = ({ inputValue }: InputProps) => {
   const [state, setState] = useState({
@@ -48,12 +58,12 @@ const LinkResult = ({ inputValue }: InputProps) => {
   return (
     <>
       {state.shortenLink && (
-        <div>
-          <p>{state.shortenLink}</p>
+        <section>
+          <Anchor href={state.shortenLink}>{state.shortenLink}</Anchor>
           <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
             <button>Copy to Clipboard</button>
           </CopyToClipboard>
-        </div>
+        </section>
       )}
     </>
   );
