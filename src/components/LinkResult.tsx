@@ -39,7 +39,6 @@ const LinkResult = ({ inputValue }: InputProps) => {
   }, [state.copied]);
 
   if (state.loading) <p>Loading...</p>;
-
   if (state.error) return <p>링크가 잘못되었습니다. 다시 한번 확인해주세요.</p>;
 
   const handleCopy = () => {
@@ -49,7 +48,7 @@ const LinkResult = ({ inputValue }: InputProps) => {
   return (
     <>
       {state.shortenLink && (
-        <div className="result">
+        <div>
           <p>{state.shortenLink}</p>
           <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
             <button>Copy to Clipboard</button>
