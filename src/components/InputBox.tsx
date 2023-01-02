@@ -25,10 +25,10 @@ interface SetInputValueProps {
 }
 
 const InputBox = ({ setInputValue }: SetInputValueProps) => {
-  const [value, setValue] = useState("");
+  const [urlInput, setUrlInput] = useState("");
   const handleClick = () => {
-    setInputValue(value);
-    setValue("");
+    setInputValue(urlInput);
+    setUrlInput("");
   };
 
   return (
@@ -38,7 +38,7 @@ const InputBox = ({ setInputValue }: SetInputValueProps) => {
         type="link"
         id="link"
         name="link" //name 연결해서 링크 입력되도록
-        onChange={(changeEvent) => setValue(changeEvent.target.value)}
+        onChange={(changeEvent) => setUrlInput(changeEvent.target.value)}
         placeholder="Please enter URL"
       />
       <Button onClick={handleClick}>Shorten!</Button>
