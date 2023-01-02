@@ -59,7 +59,9 @@ const LinkResult = ({ inputValue }: InputProps) => {
     <>
       {state.shortenLink && (
         <section>
-          <Anchor href={state.shortenLink}>{state.shortenLink}</Anchor>
+          <Anchor target="_blank" href={state.shortenLink}>
+            {state.shortenLink}
+          </Anchor>
           <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
             <button>Copy to Clipboard</button>
           </CopyToClipboard>
