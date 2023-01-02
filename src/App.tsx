@@ -6,10 +6,10 @@ import LinkResult from "./components/LinkResult";
 function App() {
   const [inputValue, setInputValue] = useState("");
   return (
-    <div className="App">
+    <>
       <InputBox setInputValue={setInputValue} />
       <LinkResult inputValue={inputValue} />
-    </div>
+    </>
   );
 }
 
