@@ -60,7 +60,7 @@ const LinkResult = ({ inputValue }: InputProps) => {
   };
 
   const onCopiedClick = () => {
-    toast.success("성공적으로 복사되었습니다!");
+    toast.success("링크가 복사되었습니다!");
   };
 
   return (
