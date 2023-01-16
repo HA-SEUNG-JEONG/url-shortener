@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { styled } from "@stitches/react";
+import { toast } from "react-toastify";
 
 interface InputProps {
   inputValue: string;
@@ -28,9 +29,12 @@ const LinkResult = ({ inputValue }: InputProps) => {
     try {
       setState((existing) => ({ ...existing, loading: true }));
       const res = await axios(`https://api.shrtco.de/v2/shorten?url=${inputValue}`);
-      setState((existing) => ({ ...existing, shortenLink: res.data.result.full_short_link }));
+      setState((existing) => ({ ...existing, shortenLink: res.data.result?.full_short_link }));
+      toast.success("링크가 생성되었습니다!");
     } catch (err) {
+      toast.error("링크가 유효하지 않습니다.");
       setState((existing) => ({ ...existing, err: err instanceof Error }));
+      1;
     } finally {
       setState((existing) => ({ ...existing, loading: false }));
     }
@@ -55,6 +59,10 @@ const LinkResult = ({ inputValue }: InputProps) => {
     setState((existing) => ({ ...existing, copied: true }));
   };
 
+  const onCopiedClick = () => {
+    toast.success("성공적으로 복사되었습니다!");
+  };
+
   return (
     <>
       {state.shortenLink && (
@@ -63,7 +71,7 @@ const LinkResult = ({ inputValue }: InputProps) => {
             {state.shortenLink}
           </Anchor>
           <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
-            <button>Copy to Clipboard</button>
+            <button onClick={onCopiedClick}>Copy to Clipboard</button>
           </CopyToClipboard>
         </section>
       )}
