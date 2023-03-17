@@ -8,13 +8,25 @@ interface InputProps {
   inputValue: string;
 }
 
+const Section = styled("section", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 const Anchor = styled("a", {
   display: "flex",
   flexDirection: "column",
   padding: "1rem 1rem",
-  marginLeft: "0.5rem",
   color: "SkyBlue",
   fontWeight: "bold",
+});
+
+const Button = styled("button", {
+  display: "flex",
+  width: "50%",
+  justifyContent: "center",
 });
 
 const LinkResult = ({ inputValue }: InputProps) => {
@@ -28,21 +40,25 @@ const LinkResult = ({ inputValue }: InputProps) => {
   const fetchData = async () => {
     try {
       setState((existing) => ({ ...existing, loading: true }));
-      const res = await axios(`https://api.shrtco.de/v2/shorten?url=${inputValue}`);
-      setState((existing) => ({ ...existing, shortenLink: res.data.result?.full_short_link }));
+      const res = await axios(
+        `https://api.shrtco.de/v2/shorten?url=${inputValue}`
+      );
+      setState((existing) => ({
+        ...existing,
+        shortenLink: res.data.result?.full_short_link,
+      }));
       toast.success("링크가 생성되었습니다!");
     } catch (err) {
       toast.error("링크가 유효하지 않습니다.");
-      setState((existing) => ({ ...existing, err: err instanceof Error }));
-      1;
+      if (err instanceof Error) setState((existing) => ({ ...existing, err }));
     } finally {
       setState((existing) => ({ ...existing, loading: false }));
     }
   };
 
   useEffect(() => {
-    if (inputValue.length) fetchData();
-  }, [inputValue]);
+    if (inputValue.length && !state.shortenLink) fetchData();
+  }, [inputValue, state.shortenLink]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -55,25 +71,23 @@ const LinkResult = ({ inputValue }: InputProps) => {
   if (state.loading) <p>Loading...</p>;
   if (state.error) return <p>링크가 잘못되었습니다. 다시 한번 확인해주세요.</p>;
 
-  const handleCopy = () => {
-    setState((existing) => ({ ...existing, copied: true }));
-  };
+  const handleCopy = () =>
+    setState((existing) => ({ ...existing, copied: true, shortenLink: "" }));
 
-  const onCopiedClick = () => {
-    toast.success("링크가 복사되었습니다!");
-  };
+  const onCopiedClick = () =>
+    toast.success("링크가 성공적으로 복사되었습니다!");
 
   return (
     <>
       {state.shortenLink && (
-        <section>
+        <Section>
           <Anchor target="_blank" href={state.shortenLink}>
             {state.shortenLink}
           </Anchor>
           <CopyToClipboard text={state.shortenLink} onCopy={handleCopy}>
-            <button onClick={onCopiedClick}>Copy to Clipboard</button>
+            <Button onClick={onCopiedClick}>Copy to Clipboard</Button>
           </CopyToClipboard>
-        </section>
+        </Section>
       )}
     </>
   );
