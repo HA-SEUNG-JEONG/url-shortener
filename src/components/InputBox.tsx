@@ -1,5 +1,5 @@
 import { styled } from "@stitches/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 const InputContainer = styled("input", {
   border: "0",
@@ -31,6 +31,9 @@ const InputBox = ({ setInputValue }: SetInputValueProps) => {
     setUrlInput("");
   };
 
+  const onChange = (changeEvent: React.ChangeEvent<HTMLInputElement>) =>
+    setUrlInput(changeEvent.target.value);
+
   return (
     <>
       <h2>URL Shortener</h2>
@@ -38,7 +41,7 @@ const InputBox = ({ setInputValue }: SetInputValueProps) => {
         type="link"
         id="link"
         name="link" //name 연결해서 링크 입력되도록
-        onChange={(changeEvent) => setUrlInput(changeEvent.target.value)}
+        onChange={onChange}
         placeholder="Please enter URL"
       />
       <Button onClick={handleClick}>Shorten!</Button>
